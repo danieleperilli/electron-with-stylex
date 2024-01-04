@@ -10,7 +10,7 @@ export const plugins = [
   new StylexPlugin({
     filename: 'styles.[contenthash].css',
     dev: true, //dev: argv.mode === 'development',
-    runtimeInjection: true,
+    runtimeInjection: false,
     classNamePrefix: 'x',
     unstable_moduleResolution: {
       type: 'commonJS',

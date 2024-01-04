@@ -5,7 +5,7 @@ import * as stylex from '@stylexjs/stylex';
 
 const styles = stylex.create({
   base: {
-    fontSize: 16,
+    fontSize: 30,
     lineHeight: 1.5,
     color: 'red',
   }

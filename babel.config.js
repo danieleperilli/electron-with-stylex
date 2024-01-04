@@ -6,6 +6,7 @@ const config = {
       styleXPlugin,
       {
         dev: true,
+        runtimeInjection: true,
         // Set this to true for snapshot testing
         // default: false
         test: false,

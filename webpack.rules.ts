@@ -21,11 +21,27 @@ export const rules: Required<ModuleOptions>['rules'] = [
   {
     test: /\.tsx?$/,
     exclude: /(node_modules|\.webpack)/,
-    use: {
-      loader: 'ts-loader',
-      options: {
-        transpileOnly: true,
+    use: [
+      // This is only needed for the StyleX babel plugin
+      {
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            ["@babel/preset-react", { "runtime": "automatic" }],
+            ["@babel/preset-typescript"]
+          ],
+          plugins: [
+            '@stylexjs/babel-plugin'
+          ]
+        },
       },
-    },
+      // Temporary disabled to use StyleX babel plugin
+      /*{
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true,
+        },
+      },*/
+    ]
   },
 ];

@@ -57,9 +57,10 @@ Install StyleX dependencies:
 ```bash
 npm install --save @stylexjs/stylex
 npm install --save-dev @stylexjs/webpack-plugin @stylexjs/babel-plugin babel-loader
+npm install --save-dev @babel/core @babel/cli @babel/preset-react @babel/preset-typescript
 ```
 
-Add the following lines to `webpack.plugins.js`:
+Add the following lines to `webpack.plugins.ts`:
 
 ```js
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -81,7 +82,7 @@ export const plugins = [
 ];
 ```
 
-Add the following lines to `webpack.rules.js`:
+Add the following lines to `webpack.rules.ts`:
 
 ```js
 ...
@@ -92,19 +93,25 @@ Add the following lines to `webpack.rules.js`:
         
         // This is needed by StyleX
         {
-            loader: "babel-loader",
-            options: {
-                rootMode: "upward",
-            },
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ["@babel/preset-react", { "runtime": "automatic" }],
+              ["@babel/preset-typescript"]
+            ],
+            plugins: [
+              '@stylexjs/babel-plugin'
+            ]
+          },
         },
 
-        // Other loader set up by Electron Forge
-        {
+        // TS loader set up by Electron Forge
+        /*{
             loader: "ts-loader",
             options: {
                 transpileOnly: true,
             },
-        },
+        },*/
     ],
 },
 ...
@@ -121,15 +128,9 @@ const config = {
       styleXPlugin,
       {
         dev: true,
-        // Set this to true for snapshot testing
-        // default: false
         test: false,
-        // Required for CSS variable support
         unstable_moduleResolution: {
-          // type: 'commonJS' | 'haste'
-          // default: 'commonJS'
           type: 'commonJS',
-          // The absolute path to the root directory of your project
           rootDir: __dirname,
         },
       },
@@ -152,7 +153,7 @@ import * as stylex from '@stylexjs/stylex';
 
 const styles = stylex.create({
   base: {
-    fontSize: 16,
+    fontSize: 30,
     lineHeight: 1.5,
     color: 'red',
   }
