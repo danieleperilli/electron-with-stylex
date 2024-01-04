@@ -11,7 +11,7 @@ const styles = stylex.create({
   }
 });
 
-ReactDOM.createRoot(document.body).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
     <>
         <b>Hello from React</b>
         <div {...stylex.props(styles.base)}>Hello from StyleX</div>

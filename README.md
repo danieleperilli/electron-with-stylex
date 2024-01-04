@@ -90,7 +90,14 @@ Add the following lines to `webpack.rules.ts`:
     test: /\.tsx?$/,
     exclude: /(node_modules|\.webpack)/,
     use: [
-        
+        // TS loader set up by Electron Forge
+        {
+            loader: "ts-loader",
+            options: {
+                transpileOnly: true,
+            },
+        },
+
         // This is needed by StyleX
         {
           loader: 'babel-loader',
@@ -104,14 +111,6 @@ Add the following lines to `webpack.rules.ts`:
             ]
           },
         },
-
-        // TS loader set up by Electron Forge
-        /*{
-            loader: "ts-loader",
-            options: {
-                transpileOnly: true,
-            },
-        },*/
     ],
 },
 ...
