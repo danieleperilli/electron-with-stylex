@@ -9,8 +9,8 @@ const StylexPlugin = require('@stylexjs/webpack-plugin');
 export const plugins = [
   new StylexPlugin({
     filename: 'styles.[contenthash].css',
-    //dev: argv.mode === 'development',
-    runtimeInjection: false,
+    dev: true, //dev: argv.mode === 'development',
+    runtimeInjection: true,
     classNamePrefix: 'x',
     unstable_moduleResolution: {
       type: 'commonJS',

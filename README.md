@@ -56,7 +56,7 @@ Install StyleX dependencies:
 
 ```bash
 npm install --save @stylexjs/stylex
-npm install --save-dev @stylexjs/webpack-plugin
+npm install --save-dev @stylexjs/webpack-plugin @stylexjs/babel-plugin babel-loader
 ```
 
 Add the following lines to `webpack.plugins.js`:
@@ -79,6 +79,65 @@ export const plugins = [
     }),
     ...
 ];
+```
+
+Add the following lines to `webpack.rules.js`:
+
+```js
+...
+{
+    test: /\.tsx?$/,
+    exclude: /(node_modules|\.webpack)/,
+    use: [
+        
+        // This is needed by StyleX
+        {
+            loader: "babel-loader",
+            options: {
+                rootMode: "upward",
+            },
+        },
+
+        // Other loader set up by Electron Forge
+        {
+            loader: "ts-loader",
+            options: {
+                transpileOnly: true,
+            },
+        },
+    ],
+},
+...
+```
+
+Create and the following lines to `babel.config.js`:
+
+```js
+import styleXPlugin from '@stylexjs/babel-plugin';
+
+const config = {
+  plugins: [
+    [
+      styleXPlugin,
+      {
+        dev: true,
+        // Set this to true for snapshot testing
+        // default: false
+        test: false,
+        // Required for CSS variable support
+        unstable_moduleResolution: {
+          // type: 'commonJS' | 'haste'
+          // default: 'commonJS'
+          type: 'commonJS',
+          // The absolute path to the root directory of your project
+          rootDir: __dirname,
+        },
+      },
+    ],
+  ],
+};
+
+export default config;
 ```
 
 ### Add sample StyleX code
